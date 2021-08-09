@@ -1,0 +1,163 @@
+.header {
+  background: #ffffff url(../../../assets/img/bannertnmt.jpg) no-repeat center;
+  height: 180px;
+  margin-top: 0px;
+}
+.header .logo {
+  position: relative;
+  margin: 0;
+  padding: 12px 10px;
+  margin-top: 45px;
+  text-align: center;
+  width: 100%;
+}
+.bgkhuvuc {
+  background: #ffffff url(../../../assets/img/BgKhuVuc.png) no-repeat center;
+  height: auto;
+  margin-top: 0px;
+}
+
+.css_TenTram {
+  padding: 20px 0px 20px 30px;
+  top: 0px;
+  font: bolder 20px sans-serif;
+  text-align: left;
+}
+
+.css_BorderRectangle {
+  border: solid 4px #ccff4a;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+.css_TittleKhuyenNghi {
+  font: bolder 20px sans-serif;
+  text-align: center;
+  line-height: 1.6;
+  color: #ffffff;
+  margin: 5px;
+  padding: 20px;
+}
+
+.css_BackgroudKhuyenNghi {
+  background: rgba(74, 157, 28, 1);
+  border: solid 4px #ccff4a;
+  float: left;
+}
+
+.css_NoiDungKhuyeNghi {
+  height: 176.894px;
+  width: 90%;
+  margin: 0 auto;
+  background: rgba(179, 255, 166, 1);
+  margin-bottom: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+.css_NoiDungKhuyeNghi span {
+  font: bolder 20px sans-serif;
+  text-align: center;
+}
+
+.css_TieuDe {
+  display: block;
+  margin: 5px 0px;
+  padding: 10px 0px;
+  text-align: center;
+  color: rgba(0, 94, 0, 1);
+  background: hsl(122 63% 37% / 0.5);
+}
+
+.css_NoiDung {
+  overflow: visible;
+  height: 276px;
+  left: 0px;
+  opacity: 0.5;
+  border: solid 4px hsl(122deg 63% 37% / 72%);
+}
+
+.css_NoiDung .css_AQI {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5vw;
+  font-weight: bold;
+  color: rgb(0, 228, 0);
+}
+
+.css_NoiDung .css_AQI_time {
+  bottom: 5px;
+  height: 100%;
+}
+
+
+
+.box1 .Rectangle_126 {
+  border: solid 4px #ccff4a;
+  /* background: url(./face.png) no-repeat top 15px center; */
+  height: 290px;
+  width: 268px;
+  display: inline-block;
+}
+
+.box1 {
+  /* border: solid pink; */
+  position: relative;
+  background: rgb(0, 228, 0);
+}
+
+.box1 .Rectangle_126 span {
+  width: 250px;
+  text-align: center;
+  top: 310px;
+  font: bolder 25px sans-serif;
+}
+
+.Rectangle_122 {
+  background: rgba(74, 157, 28, 1);
+  border: solid 4px #ccff4a;
+  width: 552.718px;
+  height: 288.844px;
+  float: left;
+}
+.Rectangle_125 {
+  height: 176.894px;
+  width: 90%;
+  margin: 0 auto;
+  background: rgba(179, 255, 166, 1);
+  margin-top: 90px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#CHT_LNG_KHNG_KH_TNH_BNH_PHC {
+  filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.161));
+  overflow: visible;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 56px;
+  color: rgba(51, 191, 2, 1);
+}
+
+.wraper {
+  width: 100%;
+}
+@media (max-width: 992px) {
+}
+
+@media (max-width: 992px) {
+  .header .logo img {
+    padding: 0px;
+    max-width: 100%;
+    max-height: 80px;
+    margin: 15px 0 0 0;
+  }
+}
+@media (max-width: 767px) {
+}
+@media (max-width: 499px) {
+}

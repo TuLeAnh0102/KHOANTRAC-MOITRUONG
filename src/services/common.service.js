@@ -111,5 +111,9 @@ function handleError(error) {
     {
         history.push('/login');
     }
+    if( error.isAxiosError && error.response.status === 403)
+    {
+        history.push('/login');
+    }
     return Promise.reject(error);
 }
