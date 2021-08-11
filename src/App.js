@@ -21,7 +21,6 @@ const HomePage = async(() => import('./containers/TheLayout'));
 const LoginPage = async(() => import('./views/Pages/LoginPage/LoginPage'));
 const Page404 = async(() =>  import('./views/Pages/page404/Page404'));
 const Page500 = async(() =>  import('./views/Pages/page500/Page500'));
-const PageCauHinhHeThong = async(() => import('./views/Pages/CauHinhHeThong/cauhinhhethong'));
 
 function App() {
     const alert = useSelector(state => state.alert);
@@ -48,7 +47,7 @@ function App() {
           <React.Suspense fallback={loading}>
             <Switch>
               <PrivateRoute exact path="/" name="Home" component={HomePage} />
-              <PrivateRoute exact path="/cau-hinh-he-thong" name="Home" component={HomePage} />
+              <PrivateRoute exact path="/cau-hinh-he-thong/nhom-quyen" name="Home" component={HomePage} />
               <Route exact path="/login" name="Login Page"  component={LoginPage} />
               <Route exact path="/404" name="Page 404"  component={Page404}  />
               <Route exact path="/500" name="Page 500"  component={Page500}  />

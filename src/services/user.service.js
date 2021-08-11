@@ -17,7 +17,7 @@ async function login (username, password){
         return await axios({
             method: 'Post',
             headers: authHeader(),
-            url : `${config.apiUrl}/api/nhan-vien/login`,
+            url : `${config.apiUrl}/api/user/login`,
             params: {
                 'username' : username,
                 'password': password
