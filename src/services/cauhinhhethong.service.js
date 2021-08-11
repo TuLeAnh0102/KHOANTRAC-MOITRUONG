@@ -1,6 +1,7 @@
 import config from '../configs/config';
 import { authHeader } from '../helpers';
 import axios from 'axios';
+import { commonService } from './common.service';
 
 export const cauhinhhethongService = {
     getLoaiTaiKhoan,
@@ -35,7 +36,7 @@ async function getLoaiTaiKhoan() {
             return res.data;
         })
     } catch (error) {
-        return handleError(error);
+        return commonService.handleError(error);
     }
 }
 async function modifyNhomQuyen(obj) {
@@ -49,14 +50,6 @@ async function modifyNhomQuyen(obj) {
             return res.data;
         })
     } catch (error) {
-        return handleError(error);
+        return commonService.handleError(error);
     }
-}
-
-function handleError(error) {
-    if( error.isAxiosError && error.response.status === 401)
-    {
-        // history.push('/login');
-    }
-    return Promise.reject(error);
 }
