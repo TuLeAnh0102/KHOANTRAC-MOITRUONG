@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
   CBadge,
   CDropdown,
@@ -12,10 +12,12 @@ import { useDispatch } from 'react-redux'
 import {userAction} from '../actions'
 const TheHeaderDropdown = () => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(localStorage.getItem('user'))
+  }, [])
   const onClick = (e) =>
   {
     dispatch(userAction.logout());
-    console.log(e.target.name);
   }
   return (
     <CDropdown
@@ -24,6 +26,7 @@ const TheHeaderDropdown = () => {
       direction="down"
     >
       <CDropdownToggle className="c-header-nav-link" caret={false}>
+        <div>Nguyễn Văn A</div>
         <div className="c-avatar">
           <CImg
             src={'avatars/account.png'}
