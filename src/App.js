@@ -47,7 +47,7 @@ function App() {
           <React.Suspense fallback={loading}>
             <Switch>
               <PrivateRoute exact path="/admin" name="Home" component={HomePage} />
-              <PrivateRoute exact path="/cau-hinh-he-thong" name="Home" component={HomePage} />
+              <PrivateRoute exact path="/cau-hinh-he-thong/nhom-quyen" name="Home" component={HomePage} />
               <Route exact path="/" name="Trang chủ"  component={DmKhuVucPage}  />
               <Route exact path="/chisokhongkhi/:id" component={ChatLuongKhongKhiPage} />
               <Route exact path="/login" name="Login Page"  component={LoginPage} />

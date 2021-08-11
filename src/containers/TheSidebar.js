@@ -11,11 +11,8 @@ import {
   CSidebarNavDropdown,
   CSidebarNavItem,
 } from "@coreui/react";
-
-import CIcon from "@coreui/icons-react";
 import { commonConstants } from "../constants/common.constants.js";
-import { userAction } from "../actions";
-
+import { cauhinhhethongService } from "src/services/cauhinhhethong.service.js";
 // sidebar nav config
 //import navigation from "./_nav";
 
@@ -23,92 +20,58 @@ const TheSidebar = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.common.sidebarShow);
   let user = JSON.parse(localStorage.getItem("user"));
-  const _nav = [
-    {
-      _tag: "CSidebarNavItem",
-      name: "Cấu hình hệ thống",
-      to: "/cau-hinh-he-thong",
-      icon: "cil-cursor",
-    }
-  ];
-
   const [navigation, setNavigation] = useState([]);
   useEffect(() => {
-    console.log(user);
-    if (user == null || user === undefined){
-      _nav.push({
-          _tag: "CSidebarNavItem",
-          name: "Đăng nhập",
-          to: "/login",
-          icon: "cil-cursor",
-        });
-    } else
-    {
-      if (user.is_chot) {
-        // _nav.push({
-        //   _tag: "CSidebarNavDropdown",
-        //   name: "Báo cáo",
-        //   route: "/bao-cao",
-        //   icon: "cil-chart-pie",
-        //   _children: [
-        //     {
-        //       _tag: "CSidebarNavItem",
-        //       name: "Thống kê theo từng chốt",
-        //       to: "/bao-cao/thong-ke-tung-chot",
-        //     },
-        //     {
-        //       _tag: "CSidebarNavItem",
-        //       name: "Thống kê lượt vận tải",
-        //       to: "/bao-cao/thong-ke-luot-van-tai",
-        //     },
-        //     {
-        //       _tag: "CSidebarNavItem",
-        //       name: "Thống kê số lượng PT",
-        //       to: "/bao-cao/thong-ke-so-luong-phuong-tien",
-        //     },
-        //     {
-        //       _tag: 'CSidebarNavItem',
-        //       name: 'Thống kê tài xế qua chốt',
-        //       to: '/bao-cao/thong-ke-tai-xe-qua-chot',
-        //     },
-        //     {
-        //       _tag: 'CSidebarNavItem',
-        //       name: 'Thống kê công nhân',
-        //       to: '/bao-cao/thong-ke-cong-nhan',
-        //     },
-        //   ],
-        // });
-        // _nav.push({
-        //   _tag: "CSidebarNavDropdown",
-        //   name: "Báo cáo vận tải",
-        //   route: "/bao-cao-van-tai",
-        //   icon: "cil-chart-pie",
-        //   _children: [
-        //     {
-        //       _tag: "CSidebarNavItem",
-        //       name: "Thống kê chi tiết vận tải",
-        //       to: "/bao-cao-van-tai/thong-ke-chi-tiet",
-        //     },
-        //     {
-        //       _tag: "CSidebarNavItem",
-        //       name: "Thống kê số lượt PT",
-        //       to: "/bao-cao-van-tai/thong-ke-so-luong",
-        //     }
-        //   ],
-        // });
-
-        // _nav.push({
-        //   _tag: "CSidebarNavItem",
-        //   name: "Theo dõi sức khỏe",
-        //   to: "/theo-doi-suc-khoe/danh-sach",
-        //   icon: "cil-location-pin",
-        // })
-      }
+    const navcustom=  []
+    if (user == null || user === undefined) {
+      console.log("??");
+      navcustom.push({
+        _tag: "CSidebarNavItem",
+        name: "Đăng nhập",
+        to: "/login",
+        icon: "cil-cursor",
+      });
+    } else {
+      cauhinhhethongService.getMenu(1, 102).then((res) => {
+        if (res.success && res.data != null) {
+          res.data.map(item => {
+            if (item.id_cha === 0)
+            {
+              let menucon = res.data.find(i => i.id_cha === item.id_menu)
+              if (menucon) {
+                let reObj = {};
+                reObj._tag = item.tag;
+                reObj.name = item.ten_menu;
+                reObj.route = item.duong_dan;
+                reObj.icon =  item.icon;
+                reObj._children =[];
+                res.data.map(itemmap => {
+                  if (item.id_menu === itemmap.id_cha) {
+                    let reObjcon = {}
+                    reObjcon._tag = itemmap.tag;
+                    reObjcon.name = itemmap.ten_menu;
+                    reObjcon.to = itemmap.duong_dan;
+                    reObj._children.push(reObjcon);
+                  }
+                });
+                navcustom.push(reObj);
+              }
+              else
+              {
+                let reObj = {};
+                reObj._tag = item.tag;
+                reObj.name = item.ten_menu;
+                reObj.to = item.duong_dan;
+                reObj.icon =  item.icon;
+                navcustom.push(reObj);
+              }
+            }
+          })
+          setNavigation(navcustom);
+        }
+      });
     }
-
-    setNavigation(_nav);
   }, []);
-
 
   return (
     <CSidebar
@@ -119,7 +82,7 @@ const TheSidebar = () => {
     >
       <CSidebarBrand className="d-md-down-none" to="/">
         <img src="logo.png"></img>
-        UBND Tỉnh Bình Phước
+        VNPT Bình Phước
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement
@@ -136,5 +99,4 @@ const TheSidebar = () => {
     </CSidebar>
   );
 };
-
 export default React.memo(TheSidebar);

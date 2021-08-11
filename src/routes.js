@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CauHinhHeThong = React.lazy(() => import('./views/Pages/CauHinhHeThong/cauhinhhethong'));
+const NhomQuyen = React.lazy(() => import('./views/Pages/CauHinhHeThong/NhomQuyen'));
 const DmKhuVucPage = React.lazy(() => import('./views/Pages/ChatLuongKhongKhiPage/DmKhuVucPage'));
 const ChatLuongKhongKhiPage = React.lazy(() => import('./views/Pages/ChatLuongKhongKhiPage/ChatLuongKhongKhiPage'));
 
