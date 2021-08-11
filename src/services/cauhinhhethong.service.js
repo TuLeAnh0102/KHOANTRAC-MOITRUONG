@@ -23,7 +23,7 @@ async function getMenu(user_id, role_id) {
             return res.data;
         })
     } catch (error) {
-        return handleError(error);
+        return commonService.handleError(error);
     }
 }
 async function getLoaiTaiKhoan() {
