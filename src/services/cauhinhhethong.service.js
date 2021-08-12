@@ -6,7 +6,8 @@ import { commonService } from './common.service';
 export const cauhinhhethongService = {
     getLoaiTaiKhoan,
     modifyNhomQuyen,
-    getMenu
+    getMenu,
+    getMenuAdmin
 };
 
 async function getMenu(user_id, role_id) {
@@ -15,6 +16,23 @@ async function getMenu(user_id, role_id) {
             method: 'Get',
             headers: authHeader(),
             url : `${config.apiUrl}/api/cau-hinh/get-menu-by-user`,
+            params: {
+                'user_id' : user_id,
+                'role_id' : role_id
+            }
+        }).then((res) => {
+            return res.data;
+        })
+    } catch (error) {
+        return commonService.handleError(error);
+    }
+}
+async function getMenuAdmin(user_id, role_id) {
+    try {
+        return await axios({
+            method: 'Get',
+            headers: authHeader(),
+            url : `${config.apiUrl}/api/cau-hinh/get-menu`,
             params: {
                 'user_id' : user_id,
                 'role_id' : role_id
