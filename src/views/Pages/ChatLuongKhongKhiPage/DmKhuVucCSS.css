@@ -57,6 +57,8 @@
 .css_NoiDungKhuyeNghi span {
   font: bolder 20px sans-serif;
   text-align: center;
+  margin: auto;
+  color: black;
 }
 
 .css_TieuDe {
@@ -66,14 +68,17 @@
   text-align: center;
   color: rgba(0, 94, 0, 1);
   background: hsl(122 63% 37% / 0.5);
+  font-weight: bold;
 }
 
 .css_NoiDung {
-  overflow: visible;
+  text-align: center;
+  /* overflow: visible; */
   height: 276px;
   left: 0px;
-  opacity: 0.5;
+  /* opacity: 0.5; */
   border: solid 4px hsl(122deg 63% 37% / 72%);
+  
 }
 
 .css_NoiDung .css_AQI {
@@ -81,14 +86,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 0.7em;
   font-size: 5vw;
   font-weight: bold;
   color: rgb(0, 228, 0);
 }
 
 .css_NoiDung .css_AQI_time {
-  bottom: 5px;
-  height: 100%;
+  position: Absolute;
+  bottom:0em;
+  left: 21%;
+  font-weight: bold;
+  color: black;
 }
 
 

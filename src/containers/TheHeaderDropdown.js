@@ -26,7 +26,7 @@ const TheHeaderDropdown = () => {
       direction="down"
     >
       <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <div>Nguyễn Văn A</div>
+        <div style ={{fontWeight: 'bold', color: 'black'}}>Nguyễn Văn A</div>
         <div className="c-avatar">
           <CImg
             src={'avatars/account.png'}
