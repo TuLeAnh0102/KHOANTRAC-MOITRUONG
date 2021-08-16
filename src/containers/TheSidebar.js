@@ -22,7 +22,7 @@ const TheSidebar = () => {
   let user = JSON.parse(localStorage.getItem("user"));
   const [navigation, setNavigation] = useState([]);
   useEffect(() => {
-    const navcustom=  []
+    const navcustom = []
     if (user == null || user === undefined) {
       console.log("??");
       navcustom.push({
@@ -35,16 +35,15 @@ const TheSidebar = () => {
       cauhinhhethongService.getMenu(1, 102).then((res) => {
         if (res.success && res.data != null) {
           res.data.map(item => {
-            if (item.id_cha === 0)
-            {
+            if (item.id_cha === 0) {
               let menucon = res.data.find(i => i.id_cha === item.id_menu)
               if (menucon) {
                 let reObj = {};
                 reObj._tag = item.tag;
                 reObj.name = item.ten_menu;
                 reObj.route = item.duong_dan;
-                reObj.icon =  item.icon;
-                reObj._children =[];
+                reObj.icon = item.icon;
+                reObj._children = [];
                 res.data.map(itemmap => {
                   if (item.id_menu === itemmap.id_cha) {
                     let reObjcon = {}
@@ -56,13 +55,12 @@ const TheSidebar = () => {
                 });
                 navcustom.push(reObj);
               }
-              else
-              {
+              else {
                 let reObj = {};
                 reObj._tag = item.tag;
                 reObj.name = item.ten_menu;
                 reObj.to = item.duong_dan;
-                reObj.icon =  item.icon;
+                reObj.icon = item.icon;
                 navcustom.push(reObj);
               }
             }
@@ -81,7 +79,7 @@ const TheSidebar = () => {
       }
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        <img src="logo.png"></img>
+        <img src="logotnmt.png"></img>
         VNPT Bình Phước
       </CSidebarBrand>
       <CSidebarNav>

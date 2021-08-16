@@ -3,6 +3,15 @@
   height: 180px;
   margin-top: 0px;
 }
+.footer {
+  
+  background: #884747;
+  /* height: 100px; */
+  margin-top: 0px;
+  text-align: center;
+  align-items: center;
+  color: black;
+}
 .header .logo {
   position: relative;
   margin: 0;
@@ -10,6 +19,7 @@
   margin-top: 45px;
   text-align: center;
   width: 100%;
+  
 }
 .bgkhuvuc {
   background: #ffffff url(../../../assets/img/BgKhuVuc.png) no-repeat center;
@@ -25,8 +35,12 @@
 }
 
 .css_BorderRectangle {
-  border: solid 4px #ccff4a;
-  margin-left: 5px;
+  /* border: solid 4px #ccff4a; */
+  margin-left: 3px;
+  margin-bottom: 10px;
+}
+.css_BorderStatus {
+  /* border: solid 4px #ccff4a; */
   margin-bottom: 10px;
 }
 
@@ -34,22 +48,22 @@
   font: bolder 20px sans-serif;
   text-align: center;
   line-height: 1.6;
-  color: #ffffff;
+  /* color: #ffffff; */
   margin: 5px;
   padding: 20px;
 }
 
 .css_BackgroudKhuyenNghi {
-  background: rgba(74, 157, 28, 1);
-  border: solid 4px #ccff4a;
+  /* background: rgba(74, 157, 28, 1); */
+  /* border: solid 4px #ccff4a; */
   float: left;
 }
 
 .css_NoiDungKhuyeNghi {
   height: 176.894px;
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
-  background: rgba(179, 255, 166, 1);
+  /* background: rgba(179, 255, 166, 1); */
   margin-bottom: 10px;
   border-radius: 10px;
   text-align: center;
@@ -58,26 +72,26 @@
   font: bolder 20px sans-serif;
   text-align: center;
   margin: auto;
-  color: black;
 }
 
 .css_TieuDe {
   display: block;
+  height: 100px;
   margin: 5px 0px;
   padding: 10px 0px;
   text-align: center;
-  color: rgba(0, 94, 0, 1);
-  background: hsl(122 63% 37% / 0.5);
+  /* color: rgba(0, 94, 0, 1); */
+  /* background: hsl(122 63% 37% / 0.5); */
   font-weight: bold;
 }
 
 .css_NoiDung {
   text-align: center;
   /* overflow: visible; */
-  height: 276px;
+  height: 265px;
   left: 0px;
   /* opacity: 0.5; */
-  border: solid 4px hsl(122deg 63% 37% / 72%);
+  /* border: solid 4px hsl(122deg 63% 37% / 72%); */
   
 }
 
@@ -89,7 +103,7 @@
   margin-top: 0.7em;
   font-size: 5vw;
   font-weight: bold;
-  color: rgb(0, 228, 0);
+  /* color: rgb(0, 228, 0); */
 }
 
 .css_NoiDung .css_AQI_time {
@@ -100,7 +114,9 @@
   color: black;
 }
 
-
+.table .th {
+  border: solid 2px black;
+}
 
 .box1 .Rectangle_126 {
   border: solid 4px #ccff4a;
@@ -113,7 +129,7 @@
 .box1 {
   /* border: solid pink; */
   position: relative;
-  background: rgb(0, 228, 0);
+  /* background: rgb(0, 228, 0); */
 }
 
 .box1 .Rectangle_126 span {

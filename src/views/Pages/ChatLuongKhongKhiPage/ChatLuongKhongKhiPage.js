@@ -1,43 +1,60 @@
 import React, { useEffect, useState } from "react";
-import LogoHeader from "../../../assets/img/logo-wweb.png";
-import ImgBieuCam from "../../../assets/img/BgKhuVuc.png";
+import HeaderChatLuongKhongKhi from "./HeaderChatLuongKhongKhi";
+import Box1 from "./Box1"
+import Box2 from "./Box2"
 import "../ChatLuongKhongKhiPage/DmKhuVucCSS.css";
 import { chiSoKhongKhiService } from "../../../services";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { Loading } from "src/components/Loading/loading";
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
-const containerStyle = {
-  width: '400px',
-  height: '400px'
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523
-};
+const getStyle = (typeStyle) => {
+  if (typeStyle === "tot") {
+    return {
+      backgroundBox1: {background: 'rgb(0, 228, 0)'},
+      thongtindonvi: { color: 'black' },
+      hoatdongkhuyennghi:
+      {
+        boder: { border: 'solid 4px #ccff4a' },
+        title: { color: 'white', background: 'rgba(74, 157, 28, 1)' },
+        content: { color: 'black', background: 'rgba(179, 255, 166, 1)' }
+      },
+      box2: {
+        title: {color: 'rgba(0, 94, 0, 1)', background: 'hsl(122 63% 37% / 0.5)'},
+        boder: { border: 'solid 4px hsl(122 63% 37% / 0.5)' },
+        aqivalue: {color: 'rgb(0, 228, 0)'},
+        content: {color: 'rgb(13,154,1)',fontWeight: 'bold'}
+      }
+    }
+  }
+  if (typeStyle === "trungbinh") {
+    return {
+      backgroundBox1: {background: 'rgb(255, 255, 0)'},
+      thongtindonvi: { color: 'black' },
+      hoatdongkhuyennghi:
+      {
+        boder: { border: 'solid 4px rgb(255,150,0)' },
+        title: { color: 'black', background: 'rgb(255, 255, 0)' },
+        content: { color: 'black', background: 'rgba(255, 255, 176)' }
+      },
+      box2: {
+        title: {color: 'black', background: 'rgb(254,235,128)'},
+        boder: { border: 'solid 4px rgb(254,235,128)' },
+        aqivalue: {color: 'rgb(255, 215, 0)'},
+        content: {color: 'red', fontWeight: 'bold'}
+      }
+    }
+  }
+}
 
 function ChatLuongKhongKhiPage() {
   const [thongSoAqi, setThongSoAqi] = useState({});
   const [loading, setLoading] = useState(false);
-  const [map, setMap] = useState(null)
-  let { id } = useParams();
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyANO2yr0I9o15BP0cgpnfs5T5JJsqcAmm4"
-  })
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
+  const [stypePage, setstypePage] = useState({});
+  useEffect(() => {
+    setstypePage(getStyle('trungbinh'));
   }, [])
 
   useEffect(() => {
@@ -49,227 +66,39 @@ function ChatLuongKhongKhiPage() {
           setThongSoAqi(res.data);
         }
       });
-
-
-    // let repeat;
-    // async function reloadData() {
-    //   console.log("AAAA");
-    //   chiSoKhongKhiService
-    //     .getThongSoAqiKhongKhi("KHONG_KHI", "DXI_SoTNMT")
-    //     .then((res) => {
-    //       if (res.success && res.data != null) {
-    //         setThongSoAqi(res.data);
-    //         repeat = setTimeout(reloadData, 10000);
-    //       }
-    //     });
-    // }
-
-    // reloadData();
-
-    // return () => {
-    //   if (repeat) {
-    //     clearTimeout(repeat);
-    //   }
-    // };
   }, []);
 
   return (
     <div>
       {loading ? (<Loading />) : (
         <Container fluid>
-          <Row className="header">
-            <Col className="logo">
-              <a title="Sở Tài nguyên và Môi trường tỉnh Bình Phước" href="/">
-                <Image
-                  id="logoheader"
-                  src={LogoHeader}
-                  alt="Sở Tài nguyên và Môi trường tỉnh Bình Phước"
-                />
-              </a>
-            </Col>
-          </Row>
+          <HeaderChatLuongKhongKhi />
           {Object.keys(thongSoAqi).length > 0 && (
             <>
-              <Row className="box1">
-                <Container>
-                  <Row>
-                    <div className="css_TenTram">
-                      <span>TRẠM QUAN TRẮC KHÔNG KHÍ KHU VỰC HUYỆN CHƠN THÀNH</span>
-                    </div>
-                  </Row>
-                  <Row>
-                    <Col lg={2}>
-                      <Row className="css_BorderRectangle">
-                        <Image
-                          id="logoheader"
-                          src={ImgBieuCam}
-                          alt="Sở Tài nguyên và Môi trường tỉnh Bình Phước"
-                          width="100%"
-                          height="289px"
-                        />
-                        <Col style={{ textAlign: 'center', fontWeight: 'bold' }}>{thongSoAqi.thongbaodan.chat_luong_khong_khi}</Col>
-                      </Row>
-                    </Col>
-                    <Col lg={5}>
-                      <Row className="css_BorderRectangle">
-                        <Col>
-                          <Row className="justify-content-md-center css_BackgroudKhuyenNghi">
-                            <span className="css_TittleKhuyenNghi">
-                              KHUYẾN NGHỊ HOẠT ĐỘNG CHO NHỮNG NGƯỜI BÌNH THƯỜNG
-                            </span>
-                            <Row className="justify-content-md-center css_NoiDungKhuyeNghi">
-                              <span>{thongSoAqi.thongbaodan.kn_nguoi_binh_thuong}</span>
-                            </Row>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col lg={5}>
-                      <Row className="css_BorderRectangle">
-                        <Col>
-                          <Row className="justify-content-md-center css_BackgroudKhuyenNghi">
-                            <span className="css_TittleKhuyenNghi">
-                              KHUYẾN NGHỊ HOẠT ĐỘNG CHO NHỮNG NGƯỜI NHẠY CẢM
-                            </span>
-                            <Row className="justify-content-md-center css_NoiDungKhuyeNghi">
-                              <span>{thongSoAqi.thongbaodan.kn_nguoi_nhay_cam}</span>
-                            </Row>
-                          </Row>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Container>
+              <Row className="box1" style={stypePage?.backgroundBox1}>
+                <Box1
+                  stylePage={stypePage}
+                  data={thongSoAqi}
+                />
               </Row>
               <Row className="justify-content-md-center">
-                <Container>
-                  <Row>
-                    <Col lg={2}>
-                      <Row className="justify-content-md-center css_TieuDe">
-                        <span>
-                          VỊ TRÍ TRẠM QUAN TRẮC <br /> KV HUYỆN CHƠN THÀNH <br /> (ĐẶT
-                          TẠI BAN QUẢN LÝ KCN MINH HƯNG 3)
-                        </span>
-                      </Row>
-                      <Row className="justify-content-md-center">
-                        {/* <Col className="css_NoiDung">
-                          <GoogleMap
-                            mapContainerStyle={containerStyle}
-                            center={center}
-                            zoom={10}
-                            onLoad={onLoad}
-                            onUnmount={onUnmount}
-                          >
-                            
-                            <></>
-                          </GoogleMap>
-                        </Col> */}
-                      </Row>
-                    </Col>
-                    <Col lg={8}>
-                      <div className="table-responsive">
-                        <table className="table table-bordered">
-                          <tbody>
-                            <tr>
-                              <td>Thông số (mg/m3)</td>
-                              <td>SO2</td>
-                              <td>CO</td>
-                              <td>NO2</td>
-                              <td>O3</td>
-                              <td>TSP</td>
-                              <td>PM10</td>
-                              <td>PM2.5</td>
-                            </tr>
-                            <tr>
-                              <td>Thông số 1h</td>
-                              <td>4.58</td>
-                              <td>170.73</td>
-                              <td>10.56</td>
-                              <td>76.84</td>
-                              <td>34.93</td>
-                              <td>25.34</td>
-                              <td>16.78</td>
-                            </tr>
-                            <tr>
-                              <td>Thông số 8h</td>
-                              <td>4.58</td>
-                              <td>170.73</td>
-                              <td>10.56</td>
-                              <td>76.84</td>
-                              <td>34.93</td>
-                              <td>25.34</td>
-                              <td>16.78</td>
-                            </tr>
-                            <tr>
-                              <td>Thông số 24h</td>
-                              <td>4.58</td>
-                              <td>170.73</td>
-                              <td>10.56</td>
-                              <td>76.84</td>
-                              <td>34.93</td>
-                              <td>25.34</td>
-                              <td>16.78</td>
-                            </tr>
-                            <tr>
-                              <td colSpan="7">QCVN 05:2013/BTNMT</td>
-                            </tr>
-                            <tr>
-                              <td>Thông số 1H</td>
-                              <td>350</td>
-                              <td>30000</td>
-                              <td>200</td>
-                              <td>200</td>
-                              <td>300</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td>Thông số 8H</td>
-                              <td>-</td>
-                              <td>10000</td>
-                              <td>-</td>
-                              <td>120</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                            </tr>
-                            <tr>
-                              <td>Thông số 24h</td>
-                              <td>125</td>
-                              <td>-</td>
-                              <td>100</td>
-                              <td>-</td>
-                              <td>200</td>
-                              <td>150</td>
-                              <td>50</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </Col>
-                    <Col lg={2}>
-                      <Row className="justify-content-md-center">
-                        <Col className="css_TieuDe">
-                          <span>
-                            CHẤT LƯỢNG KHÔNG KHÍ TRUNG BÌNH GIỜ <br />{" "}
-                            <span>VN_AQIH</span>
-                          </span>
-                        </Col>
-                      </Row>
-                      <Row className="justify-content-md-center">
-                        <Col className="css_NoiDung">
-                          <div className="css_AQI">{thongSoAqi.vn_aqi_h}</div>
-                          <div className="align-items-end css_AQI_time">
-                            09h:00 20/05/2021
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Container>
+                <Box2
+                  stylePage={stypePage.box2}
+                  data={thongSoAqi}
+                />
               </Row>
             </>
           )}
+          <Row className="footer">
+            <Col style={{magin: 'auto'}}>
+              <span style={{display: 'block'}}>TRANG THÔNG TIN ĐIỆN TỬ SỞ TÀI NGUYÊN VÀ MÔI TRƯỜNG BÌNH PHƯỚC </span>
+              <span style={{display: 'block'}}>Chịu trách nhiệm chính: Giám đốc Dương Hoàng Anh Tuấn </span>
+              <span style={{display: 'block'}}>Địa chỉ: QL 14, phường Tân Bình, thành phố Đồng Xoài, tỉnh Bình Phước</span>
+              <span style={{display: 'block'}}>Điện thoại: 02713. 879110 - FAX: 02713.879110</span>
+              <span style={{display: 'block'}}>Email: stnmt@binhphuoc.gov.vn</span>
+            </Col>
+
+          </Row>
         </Container>
 
       )}
