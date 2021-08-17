@@ -5,7 +5,7 @@
 }
 .footer {
   
-  background: #884747;
+  /* background: #884747; */
   /* height: 100px; */
   margin-top: 0px;
   text-align: center;
@@ -32,6 +32,7 @@
   top: 0px;
   font: bolder 20px sans-serif;
   text-align: left;
+  color: black;
 }
 
 .css_BorderRectangle {
@@ -72,6 +73,7 @@
   font: bolder 20px sans-serif;
   text-align: center;
   margin: auto;
+  color: black;
 }
 
 .css_TieuDe {
@@ -80,7 +82,7 @@
   margin: 5px 0px;
   padding: 10px 0px;
   text-align: center;
-  /* color: rgba(0, 94, 0, 1); */
+  color: black;
   /* background: hsl(122 63% 37% / 0.5); */
   font-weight: bold;
 }

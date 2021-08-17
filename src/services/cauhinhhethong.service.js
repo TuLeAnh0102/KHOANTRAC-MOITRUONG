@@ -7,7 +7,8 @@ export const cauhinhhethongService = {
     getLoaiTaiKhoan,
     modifyNhomQuyen,
     getMenu,
-    getMenuAdmin
+    getMenuAdmin,
+    getStyles
 };
 
 async function getMenu(user_id, role_id) {
@@ -50,6 +51,22 @@ async function getLoaiTaiKhoan() {
             method: 'Get',
             headers: authHeader(),
             url : `${config.apiUrl}/api/cau-hinh/get-loai-tai-khoan`
+        }).then((res) => {
+            return res.data;
+        })
+    } catch (error) {
+        return commonService.handleError(error);
+    }
+}
+async function getStyles(type) {
+    try {
+        return await axios({
+            method: 'Get',
+            headers: authHeader(),
+            url : `${config.apiUrl}/api/cau-hinh/get-styles`,
+            params: {
+                'type' : type,
+            }
         }).then((res) => {
             return res.data;
         })
