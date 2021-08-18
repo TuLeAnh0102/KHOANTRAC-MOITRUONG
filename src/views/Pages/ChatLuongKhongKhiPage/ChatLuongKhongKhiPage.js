@@ -38,7 +38,6 @@ function ChatLuongKhongKhiPage() {
       .getThongSoAqiKhongKhi("KHONG_KHI", "DXI_SoTNMT")
       .then((res) => {
         if (res.success && res.data != null) {
-          console.log(res.data);
           setThongSoAqi(res.data);
           setstypePage(getStyle(res.data.thongbaodan));
         }
@@ -66,6 +65,7 @@ function ChatLuongKhongKhiPage() {
               </Row>
             </>
           )}
+          
           <Row className="footer" style={stypePage.mau_footer}>
             <Col style={{ magin: 'auto' }}>
               <span style={{ display: 'block' }}>TRANG THÔNG TIN ĐIỆN TỬ SỞ TÀI NGUYÊN VÀ MÔI TRƯỜNG BÌNH PHƯỚC </span>
@@ -73,6 +73,12 @@ function ChatLuongKhongKhiPage() {
               <span style={{ display: 'block' }}>Địa chỉ: QL 14, phường Tân Bình, thành phố Đồng Xoài, tỉnh Bình Phước</span>
               <span style={{ display: 'block' }}>Điện thoại: 02713. 879110 - FAX: 02713.879110</span>
               <span style={{ display: 'block' }}>Email: stnmt@binhphuoc.gov.vn</span>
+            </Col>
+
+          </Row>
+          <Row style={{background: 'black', color: 'white', textAlign: 'center'}}>
+            <Col style={{ magin: 'auto' }}>
+              <span style={{ display: 'block' }}>Banr quyen abc xyz</span>
             </Col>
 
           </Row>

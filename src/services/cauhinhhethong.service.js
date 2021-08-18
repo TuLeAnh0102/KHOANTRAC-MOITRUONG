@@ -8,7 +8,8 @@ export const cauhinhhethongService = {
     modifyNhomQuyen,
     getMenu,
     getMenuAdmin,
-    getStyles
+    getStyles,
+    updateDanhSachMenu
 };
 
 async function getMenu(user_id, role_id) {
@@ -74,6 +75,21 @@ async function getStyles(type) {
         return commonService.handleError(error);
     }
 }
+async function updateDanhSachMenu(obj) {
+    try {
+        return await axios({
+            method: 'POST',
+            headers: authHeader(),
+            url: `${config.apiUrl}/api/cau-hinh/update-danh-sach-menu`,
+            data: JSON.stringify(obj)
+        }).then((res) => {
+            return res.data;
+        })
+    } catch (error) {
+        return commonService.handleError(error);
+    }
+}
+
 async function modifyNhomQuyen(obj) {
     try {
         return await axios({

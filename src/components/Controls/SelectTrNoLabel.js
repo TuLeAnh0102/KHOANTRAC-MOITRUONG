@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Select from 'react-select';
-import { CCol, CLabel } from "@coreui/react";
 import { Controller } from "react-hook-form";
 const styleRequire = {
     color: "#FF0000",
     marginLeft: "2px",
 }
-export default function SelectTrNoLabel({ placeholder, dataOptions, handelOnChange, nameselect, setValueDefault, labelRequired, labelSelect }) {
+export default function SelectTrNoLabel({ errors = null, placeholder, dataOptions, handelOnChange, nameselect, setValueDefault, control, labelSelect }) {
     const [valuehientai, setvaluehientai] = useState('');
     useEffect(() => {
-        if (setValueDefault != null && setValueDefault != '') {
-            setvaluehientai(setValueDefault)
+        if(dataOptions)
+        {
+            if(setValueDefault != null && setValueDefault != undefined)
+            {
+                setvaluehientai(dataOptions.find(item => item.value === setValueDefault));
+            }
+            else
+            {
+                setvaluehientai('')
+            }
         }
-    }, [setValueDefault])
+    }, [setValueDefault, dataOptions])
     const handleOnSelectChange = (e, item) => {
         setvaluehientai(e);
         handelOnChange(e, item);
@@ -30,16 +37,26 @@ export default function SelectTrNoLabel({ placeholder, dataOptions, handelOnChan
         }
     }
     return (
-
-        <Select
-            placeholder={placeholder}
-            noOptionsMessage={noOptionsMessage}
-            name={nameselect}
-            value={valuehientai}
-            options={dataOptions}
-            onChange={handleOnSelectChange}
-            styles={colourStyles}
-        />
+        <>
+            <Controller
+                name={nameselect}
+                control={control}
+                defaultValue={valuehientai?.value}
+                render={() => (
+                    <Select
+                        placeholder={placeholder}
+                        noOptionsMessage={noOptionsMessage}
+                        name={nameselect}
+                        value={valuehientai}
+                        options={dataOptions}
+                        onChange={handleOnSelectChange}
+                        className={`${errors[nameselect] ? "is-invalid" : ""}`}
+                        styles={colourStyles}
+                    />
+                )}
+            />
+            {!valuehientai && errors[nameselect] && <div style={{ color: "red", padding: '0px', margin: '0px', fontStyle: 'italic' }}>{errors[nameselect]?.message} {labelSelect}</div>}
+        </>
 
     )
 }

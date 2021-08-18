@@ -24,7 +24,6 @@ const TheSidebar = () => {
   useEffect(() => {
     const navcustom = []
     if (user == null || user === undefined) {
-      console.log("??");
       navcustom.push({
         _tag: "CSidebarNavItem",
         name: "Đăng nhập",
@@ -78,9 +77,9 @@ const TheSidebar = () => {
         dispatch({ type: commonConstants.SIDEBAR_SHOW, sidebarShow: val })
       }
     >
-      <CSidebarBrand className="d-md-down-none" to="/">
-        <img src="logotnmt.png"></img>
-        VNPT Bình Phước
+      <CSidebarBrand className="d-md-down-none" to="/admin" >
+        <img style={{ width: '5em', height: '4em' }} src="logotnmt.png"></img>
+        Sở Tài Nguyên Môi Trường
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement

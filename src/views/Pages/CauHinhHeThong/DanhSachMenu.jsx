@@ -26,10 +26,11 @@ export default function DanhSachMenu() {
     //state
     const [loading, setLoading] = useState(false);
     const [isOpenModal, setisOpenModal] = useState(false);
-    const [isOpenModalSetting, setisOpenModalSetting] = useState(false)
+    const [isOpenModalSetting, setisOpenModalSetting] = useState(false);
     const [listMenu, setlistMenu] = useState([]);
     const [rows, setRows] = useState([]);
     const [listMenuCha, setlistMenuCha] = useState([]);
+    const [keyEdit, setkeyEdit] = useState(0);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //function handleEditClick
@@ -47,11 +48,11 @@ export default function DanhSachMenu() {
     useEffect(() => {
         cauhinhhethongService.getMenuAdmin(1, 102).then((res) => {
             if (res.success && res.data != null) {
-                console.log(res.data);
+                setRows(res.data);
+                var list;
                 var menuCha = res.data.filter(item => item.id_cha === 0);
-                console.log('menucha', menuCha);
                 if (menuCha) {
-                    var list = menuCha.map(item => {
+                    list = menuCha.map(item => {
                         return {
                             'value': item.id_menu,
                             'label': item.ten_menu
@@ -81,30 +82,26 @@ export default function DanhSachMenu() {
                                                 type="button"
                                                 size="sm"
                                                 color="success"
-                                                onClick={() => alert("Chức năng đang phát triển")}
+                                                onClick={() => {setlistMenu([]);  handleEditClick();}}
                                             >
                                                 <CIcon name="cil-Pencil" /> Thêm mới
                                             </CButton>
-                                            {/* <ModalInsert
-                          isOpen={isOpenModal}
-                          dataOptions={listMenu}
-                          
-                        /> */}
                                             <ModalModify
                                                 labelModal="Cập nhật Menu"
                                                 isOpen={isOpenModalSetting}
                                                 dataOptions={listMenu}
                                                 handelClose={handleSettingClick}
                                                 listMenuCha={listMenuCha}
+                                                keyEdit={keyEdit}
                                             />
                                             {/* <CButton
-                          type="button"
-                          size="sm"
-                          color="info"
-                          onClick={handleBtnExportClick}
-                        >
-                          <CIcon name="cil-print" /> Xuất báo cáo
-                        </CButton> */}
+                                                type="button"
+                                                size="sm"
+                                                color="info"
+                                                onClick={handleBtnExportClick}
+                                                >
+                                                <CIcon name="cil-print" /> Xuất báo cáo
+                                                </CButton> */}
                                         </CFormGroup>
                                     </CCol>
                                 </CFormGroup>
@@ -241,7 +238,7 @@ export default function DanhSachMenu() {
                                                     <div style={{ textAlign: "center" }}>
                                                         <CButton
                                                             color="danger"
-                                                            onClick={() => alert("Chức năng đang phát triển")}
+                                                            onClick={() => {console.log(props.original.id_menu)}}
                                                         >
                                                             <MdDelete
                                                             />
@@ -250,9 +247,8 @@ export default function DanhSachMenu() {
                                                         <CButton
                                                             style={{ backgroundColor: "#00b300", color: 'white' }}
                                                             color="#33cc33"
-                                                            onClick={() => { setlistMenu(props.original); handleEditClick() }}
+                                                            onClick={() => {setkeyEdit(props.original.id_menu); setlistMenu(props.original); handleEditClick() }}
                                                         >
-
                                                             <MdModeEdit />
                                                         </CButton>
                                                         {"  "}
@@ -261,7 +257,6 @@ export default function DanhSachMenu() {
                                                             color="#33cc33"
                                                             onClick={handleSettingClick}
                                                         >
-
                                                             <MdSettings />
                                                         </CButton>
                                                     </div>
