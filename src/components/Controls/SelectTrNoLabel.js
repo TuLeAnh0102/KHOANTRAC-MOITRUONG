@@ -8,7 +8,7 @@ const styleRequire = {
 export default function SelectTrNoLabel({ errors = null, placeholder, dataOptions, handelOnChange, nameselect, setValueDefault, control, labelSelect }) {
     const [valuehientai, setvaluehientai] = useState('');
     useEffect(() => {
-        if(dataOptions)
+        if(dataOptions && dataOptions.length>0)
         {
             if(setValueDefault != null && setValueDefault != undefined)
             {
@@ -19,6 +19,10 @@ export default function SelectTrNoLabel({ errors = null, placeholder, dataOption
                 setvaluehientai('')
             }
         }
+        else{
+            setvaluehientai("")
+        }
+        
     }, [setValueDefault, dataOptions])
     const handleOnSelectChange = (e, item) => {
         setvaluehientai(e);
@@ -41,7 +45,7 @@ export default function SelectTrNoLabel({ errors = null, placeholder, dataOption
             <Controller
                 name={nameselect}
                 control={control}
-                defaultValue={valuehientai?.value}
+                defaultValue={setValueDefault&&setValueDefault?setValueDefault:""}
                 render={() => (
                     <Select
                         placeholder={placeholder}

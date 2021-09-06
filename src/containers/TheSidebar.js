@@ -68,7 +68,7 @@ const TheSidebar = () => {
         }
       });
     }
-  }, [user]);
+  }, []);
 
   return (
     <CSidebar

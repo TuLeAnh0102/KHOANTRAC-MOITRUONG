@@ -18,7 +18,8 @@ import { cauhinhhethongService } from "../../../services";
 import { Loading } from "src/components/Loading/loading";
 import ModalInsert from '../../../components/CauHinhHeThong/ModalInsert'
 import ModalSettings from "src/components/CauHinhHeThong/ModalSettings";
-import { MdDelete, MdModeEdit, MdSettings } from 'react-icons/md'
+import { MdDelete, MdModeEdit, MdSettings,MdExpandMore,MdChevronRight } from 'react-icons/md';
+import ModalPhanQuyenMenu from "./Components/ModalPhanQuyenMenu"
 
 function NhomQuyen() {
 
@@ -48,6 +49,7 @@ function NhomQuyen() {
     cauhinhhethongService.getLoaiTaiKhoan().then((res) => {
       if (res.success && res.data != null) {
         setloaiTaiKhoan(res.data);
+        console.log('res',res.data);
       }
     });
   }, [])
@@ -72,14 +74,18 @@ function NhomQuyen() {
                       >
                         <CIcon name="cil-Pencil" /> Thêm mới
                       </CButton>
-                      <ModalInsert
+                      <ModalPhanQuyenMenu
+                        isOpen={isOpenModalSetting}
+                        handelClose={handleSettingClick}
+                      />
+                      {/* <ModalInsert
                         isOpen={isOpenModal}
                         dataOptions={loaiTaiKhoan}
                       />
                       <ModalSettings
                         isOpen={isOpenModalSetting}
                         dataOptions={loaiTaiKhoan}
-                      />
+                      /> */}
                       {/* <CButton
                         type="button"
                         size="sm"

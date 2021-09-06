@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import SelectTrNoLabel from '../../../components/Controls/SelectTrNoLabel';
+import SelectTrNoLabel from '../../../../components/Controls/SelectTrNoLabel';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -15,6 +15,7 @@ import {
     CInput,
     CForm
 } from '@coreui/react';
+import { cauhinhhethongService } from 'src/services';
 const styleLabel = {
     fontWeight: "bold",
     fontSize: "20px",
@@ -44,10 +45,10 @@ align-items: right;
 text-align: right;
 `;
 
-export default function ModalModify({ isOpen, dataOptions = null, labelModal, handelClose, listMenuCha, keyEdit = 0 }) {
+export default function ModalModify({ isOpen, dataOptions = null, labelModal, handelClose, listMenuCha }) {
     const [modal, setModal] = useState(isOpen);
     const [summaryModal, setsummaryModal] = useState([]);
-    const [listMenu, setlistMenu] = useState([]);
+    const [id_menu, setid_menu] = useState(0);
     const validationSchema = Yup.object().shape({
         ten_menu: Yup.string().required("không được để trống"),
         duong_dan: Yup.string().required("không được để trống"),
@@ -58,24 +59,13 @@ export default function ModalModify({ isOpen, dataOptions = null, labelModal, ha
     const { register, handleSubmit, reset, setValue, errors, control } = useForm({
         resolver: yupResolver(validationSchema),
     });
+    // console.log(errors);
     useEffect(() => {
-       if(dataOptions)
-       {
-           setValue('tag',dataOptions['tag']);
-           setValue('id_cha',dataOptions['id_cha']);
-       }
-       else{
-        setValue('tag','');
-        setValue('id_cha','');
-       }
+        setid_menu(dataOptions['id_menu'] ? dataOptions['id_menu'] : 0);
+        setValue('id_cha', (dataOptions['id_cha'] === undefined) ? "" : dataOptions['id_cha']);
+        setValue('tag', dataOptions['tag'] ? dataOptions['tag'] : 0);
     }, [dataOptions]);
 
-    useEffect(() => {
-        if (listMenuCha) {
-            setlistMenu(listMenuCha)
-        }
-
-    }, [listMenuCha])
     const optionsTag = [
         { value: 'CSidebarNavDropdown', label: "CSidebarNavDropdown" },
         { value: 'CSidebarNavItem', label: "CSidebarNavItem" }
@@ -136,7 +126,7 @@ export default function ModalModify({ isOpen, dataOptions = null, labelModal, ha
                     name: 'id_cha',
                     require_the: true,
                     loai_the: 'select',
-                    dataThe: listMenu,
+                    dataThe: listMenuCha,
                     disable: false,
                     defaultValue: dataOptions.id_cha
                 },
@@ -165,20 +155,26 @@ export default function ModalModify({ isOpen, dataOptions = null, labelModal, ha
 
     const toggle = () => {
         reset({})
-        setValue('tag','');
-        setValue('id_cha','');
         handelClose();
     }
-    const handelLoaiTKChange = (e,id) => {
-        setValue(id.name,e.value)
+    const handelLoaiTKChange = (e, id) => {
+        setValue(id.name, e.value)
     }
     const handleSubmittest = (data) => {
-        reset({}); 
-        setValue('tag','');
-        setValue('id_cha','');
-        //gọi hàm update, keyedit = 0 thì tạo mới, khác 0 thì cập nhật
-        console.log(keyEdit);
-        console.log(data);
+        let dataSubmit = { ...data, id_menu: id_menu };
+        reset({});
+        // setValue('tag',"");
+        // setValue('id_cha',"");
+        //gọi hàm update, id_menu = 0 thì tạo mới, khác 0 thì cập nhật
+        // console.log(dataSubmit);
+        // console.log(dataOptions);
+        cauhinhhethongService.updateDanhSachMenu(dataSubmit).then((res) => {
+            if (res["id"] === 1) {
+              alert("Cập nhật thông tin thành công! ");
+              window.location.reload();
+            } else alert(res["message"]);
+          });
+        toggle();
     }
     const handelUpdateClick = () => {
 
@@ -208,11 +204,11 @@ export default function ModalModify({ isOpen, dataOptions = null, labelModal, ha
                                                 <input
                                                     name={item.name}
                                                     ref={register}
-                                                    style={{ color: 'black',  width: '100%', border: 'solid 1px hsl(0, 0%, 70%)', borderRadius: '4px', height: '2.4em' ,paddingLeft: '0.7em'}}
+                                                    style={{ color: 'black', width: '100%', border: 'solid 1px hsl(0, 0%, 70%)', borderRadius: '4px', height: '2.4em', paddingLeft: '0.7em' }}
                                                     defaultValue={item.dataThe}
                                                     disabled={item.disable}
                                                 />
-                                                {errors[item.name] && <p style={{color: "red", padding:'0px', margin: '0px', fontStyle: 'italic'}}>{item.ten_the} {errors[item.name].message}</p>}
+                                                {errors[item.name] && <p style={{ color: "red", padding: '0px', margin: '0px', fontStyle: 'italic' }}>{item.ten_the} {errors[item.name].message}</p>}
                                             </div>
                                             :
                                             <SelectTrNoLabel
@@ -230,16 +226,14 @@ export default function ModalModify({ isOpen, dataOptions = null, labelModal, ha
                                 </CRow>)
                         })
                         }
-
                     </CModalBodyStyled>
-
                     <CModalFooter>
                         <CButton
                             color="success"
                             type="submit"
                             onClick={handelUpdateClick}
                             name="btnUpdate"
-                        >{dataOptions && dataOptions ? "Cập nhật" : "Lưu"}</CButton>
+                        >{id_menu ? "Cập nhật" : "Lưu"}</CButton>
                         <CButton
                             color="secondary"
                             onClick={toggle}

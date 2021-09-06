@@ -16,35 +16,32 @@ import "react-table-v6/react-table.css";
 import { matchSorter } from "match-sorter";
 import { cauhinhhethongService } from "../../../services";
 import { Loading } from "src/components/Loading/loading";
-import ModalInsert from '../../../components/CauHinhHeThong/ModalInsert'
-import ModalSettings from "src/components/CauHinhHeThong/ModalSettings";
 import ModalModify from "./Components/ModalModify";
-import { MdDelete, MdModeEdit, MdSettings } from 'react-icons/md'
 
-export default function DanhSachMenu() {
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //state
+import { MdDelete, MdModeEdit, MdSettings, MdAutorenew, MdCached } from 'react-icons/md'
+
+export default function DanhSachTaiKhoan() {
+    /////////////////////////////////////////*STATE*///////////////////////////////////////////////////////////////////
     const [loading, setLoading] = useState(false);
-    const [isOpenModal, setisOpenModal] = useState(false);
+    // const [isOpenModal, setisOpenModal] = useState(false);
     const [isOpenModalSetting, setisOpenModalSetting] = useState(false);
     const [listMenu, setlistMenu] = useState({});
     const [rows, setRows] = useState([]);
     const [listMenuCha, setlistMenuCha] = useState([]);
     const [keyEdit, setkeyEdit] = useState(0);
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //function handleEditClick
+    /////////////////////////////////////////////*FUNCTION/////////////////////////////////////////////////////
     const handleEditClick = () => {
-        // setisOpenModal(!isOpenModal)
         setisOpenModalSetting(!isOpenModalSetting)
     }
     const handleSettingClick = () => {
-        // setisOpenModal(!isOpenModal)
-        // setlistMenu(id);
-        // console.log(id);
-        setisOpenModalSetting(!isOpenModalSetting)
+        // setisOpenModalSetting(!isOpenModalSetting)
+        // var obj ={hoten: '123', sdt:'456'}
+        // cauhinhhethongService.apitestbot(obj).then((res) => {
+        //     console.log('res',res);
+        // });
+        // alert("Đang làm")
     }
-
+    /////////////////////////////////////////*USE_EFFECT*///////////////////////////////////////////////////////////////////
     useEffect(() => {
         cauhinhhethongService.getMenuAdmin(1, 102).then((res) => {
             if (res.success && res.data != null) {
@@ -82,7 +79,7 @@ export default function DanhSachMenu() {
                                                 type="button"
                                                 size="sm"
                                                 color="success"
-                                                onClick={() => {setlistMenu({});  handleEditClick();}}
+                                                onClick={() => { setlistMenu({}); handleEditClick(); }}
                                             >
                                                 <CIcon name="cil-Pencil" /> Thêm mới
                                             </CButton>
@@ -94,14 +91,6 @@ export default function DanhSachMenu() {
                                                 listMenuCha={listMenuCha}
                                                 keyEdit={keyEdit}
                                             />
-                                            {/* <CButton
-                                                type="button"
-                                                size="sm"
-                                                color="info"
-                                                onClick={handleBtnExportClick}
-                                                >
-                                                <CIcon name="cil-print" /> Xuất báo cáo
-                                                </CButton> */}
                                         </CFormGroup>
                                     </CCol>
                                 </CFormGroup>
@@ -145,7 +134,7 @@ export default function DanhSachMenu() {
                                             },
 
                                             {
-                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}> Tên Menu</div>,
+                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>Tên tài khoản</div>,
                                                 id: "ten-menu",
 
                                                 accessor: (c) => c.ten_menu,
@@ -167,7 +156,7 @@ export default function DanhSachMenu() {
                                                 ),
                                             },
                                             {
-                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>Đường link</div>,
+                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>Đơn vị</div>,
                                                 id: "duong_dan",
 
                                                 accessor: (c) => c.duong_dan,
@@ -189,7 +178,7 @@ export default function DanhSachMenu() {
                                                 ),
                                             },
                                             {
-                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>ICon</div>,
+                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>Email</div>,
                                                 id: "icon",
                                                 accessor: (c) => c.icon,
                                                 filterMethod: (filter, rows) =>
@@ -210,7 +199,7 @@ export default function DanhSachMenu() {
                                                 ),
                                             },
                                             {
-                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>Tag Name</div>,
+                                                Header: () => <div style={{ backgroundColor: '#04AA6D', color: '#ffffff', fontWeight: 'bold', padding: '5px' }}>Status</div>,
                                                 id: "tag",
                                                 accessor: (c) => c.tag,
                                                 filterMethod: (filter, rows) =>
@@ -219,15 +208,18 @@ export default function DanhSachMenu() {
                                                     }),
                                                 filterAll: true,
                                                 Cell: ({ value }) => (
-                                                    <span
-                                                        style={{
-                                                            display: "block",
-                                                            width: "100%",
-                                                            textAlign: "center",
-                                                        }}
-                                                    >
-                                                        {value}
-                                                    </span>
+                                                    <div style={{
+                                                                display: "block",
+                                                                width: "100%",
+                                                                textAlign: "center",
+
+                                                            }}>
+                                                        <span 
+                                                           
+                                                        >
+                                                            {value}
+                                                        </span>
+                                                    </div>
                                                 ),
                                             },
                                             {
@@ -238,7 +230,7 @@ export default function DanhSachMenu() {
                                                     <div style={{ textAlign: "center" }}>
                                                         <CButton
                                                             color="danger"
-                                                            onClick={() => {console.log(props.original.id_menu)}}
+                                                            onClick={() => { console.log(props.original.id_menu) }}
                                                         >
                                                             <MdDelete
                                                             />
@@ -247,17 +239,19 @@ export default function DanhSachMenu() {
                                                         <CButton
                                                             style={{ backgroundColor: "#00b300", color: 'white' }}
                                                             color="#33cc33"
-                                                            onClick={() => {setkeyEdit(props.original.id_menu); setlistMenu(props.original); handleEditClick() }}
+                                                            onClick={() => { setkeyEdit(props.original.id_menu); setlistMenu(props.original); handleEditClick() }}
                                                         >
                                                             <MdModeEdit />
                                                         </CButton>
+
                                                         {"  "}
                                                         <CButton
                                                             style={{ backgroundColor: "#669999", color: 'white' }}
                                                             color="#33cc33"
                                                             onClick={handleSettingClick}
+                                                            title="Reset mật khẩu"
                                                         >
-                                                            <MdSettings />
+                                                            <MdCached />
                                                         </CButton>
                                                     </div>
                                                 ),
