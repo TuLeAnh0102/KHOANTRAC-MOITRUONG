@@ -29,6 +29,7 @@ function NhomQuyen() {
   const [isOpenModal, setisOpenModal] = useState(false);
   const [isOpenModalSetting, setisOpenModalSetting] = useState(false)
   const [loaiTaiKhoan, setloaiTaiKhoan] = useState([]);
+  const [rowClick, setrowClick] = useState({})
   const [rows, setRows] = useState([
     {
       id_nhom_quyen: 1,
@@ -77,6 +78,8 @@ function NhomQuyen() {
                       <ModalPhanQuyenMenu
                         isOpen={isOpenModalSetting}
                         handelClose={handleSettingClick}
+                        role_id={rowClick}
+
                       />
                       {/* <ModalInsert
                         isOpen={isOpenModal}
@@ -197,7 +200,7 @@ function NhomQuyen() {
                             <CButton
                               style={{ backgroundColor: "#669999", color: 'white' }}
                               color="#33cc33"
-                              onClick={handleSettingClick}
+                              onClick={()=>{handleSettingClick();setrowClick(props.original); }}
                             >
 
                               <MdSettings />

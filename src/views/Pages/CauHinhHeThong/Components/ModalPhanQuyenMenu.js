@@ -4,11 +4,12 @@ import SelectTrNoLabel from '../../../../components/Controls/SelectTrNoLabel';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { MdDelete, MdModeEdit, MdSettings,MdExpandMore,MdChevronRight } from 'react-icons/md';
+import { MdDelete, MdModeEdit, MdSettings, MdExpandMore, MdChevronRight } from 'react-icons/md';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import { makeStyles } from "@material-ui/core/styles";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { cauhinhhethongService } from 'src/services';
 // import Checkbox from '@material-ui/core/Checkbox';
 // import Checkbox from 'src/components/Controls/Checkbox';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -23,8 +24,6 @@ import {
     CInput,
     CForm,
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react'
-import { Route } from 'react-router-dom';
 
 const styleLabel = {
     fontWeight: "bold",
@@ -58,101 +57,144 @@ text-align: right;
 
 const useViewStyles = makeStyles({
     root: {}
-  });
-  
-  const useItemStyles = makeStyles(theme => ({
+});
+
+const useItemStyles = makeStyles(theme => ({
     root: {
-      "& > .MuiTreeItem-content > .MuiTreeItem-label": {
-        display: "flex",
-        alignItems: "center",
-        padding: "4px 0",
-        background: "transparent !important",
-        pointerEvents: "none"
-      },
-      "& > .MuiTreeItem-content  > .MuiTreeItem-label::before": {
-        content: "''",
-        display: "inline-block",
-        width: 12,
-        height: 12,
-        marginRight: 8,
-        border: "1px solid #ccc",
-        background: "white"
-      }
+        "& > .MuiTreeItem-content > .MuiTreeItem-label": {
+            display: "flex",
+            alignItems: "center",
+            padding: "4px 0",
+            background: "transparent !important",
+            pointerEvents: "none"
+        },
+        "& > .MuiTreeItem-content  > .MuiTreeItem-label::before": {
+            content: "''",
+            display: "inline-block",
+            width: 12,
+            height: 12,
+            marginRight: 8,
+            border: "1px solid #ccc",
+            background: "white"
+        }
     },
     iconContainer: {
-      marginRight: 12,
-      "& > svg": {
-        padding: 8,
-        "&:hover": {
-          opacity: 0.6
+        marginRight: 12,
+        "& > svg": {
+            padding: 8,
+            "&:hover": {
+                opacity: 0.6
+            }
         }
-      }
     },
     label: {
-      padding: 0
+        padding: 0
     },
     selected: {
-      "& > .MuiTreeItem-content  > .MuiTreeItem-label::before": {
-        background: theme.palette.primary.main,
-        border: "1px solid transparent"
-      }
+        "& > .MuiTreeItem-content  > .MuiTreeItem-label::before": {
+            background: theme.palette.primary.main,
+            border: "1px solid transparent"
+        }
     }
-  }));
-export default function ModalPhanQuyenMenu({ isOpen, labelModal, handelClose }) {
+}));
+export default function ModalPhanQuyenMenu({ isOpen, labelModal, handelClose, role_id }) {
     const [modal, setModal] = useState(false);
+    const [treeData, settreeData] = useState([])
     const toggle = () => {
         // reset({})
         handelClose();
     }
     useEffect(() => {
-        setModal(isOpen)
-    }, [isOpen]);
+        console.log(role_id);
+    }, [role_id]);
+    useEffect(() => {
+        if (role_id && role_id.id_nhom_quyen !== undefined) {
+            cauhinhhethongService.getMenuAdmin(role_id.id_nhom_quyen, '102',).then((res) => {
+                if (res.success && res.data != null) {
+                    console.log('res_menu', res.data);
+                    //map data to object parent-children
+                    let datamap = mapdataParentChildren(res.data);
+                    settreeData(datamap);
+                }
+            });
+        }
+
+    }, [role_id])
+
+    const mapdataParentChildren = (data) => {
+        let datamap = data.filter((item) => item.id_cha === 0);
+        datamap.map((item) => {
+            let menucon = data.filter((i) => i.id_cha === item.id_menu)
+            if (menucon) {
+                item.children = menucon;
+            }
+            else {
+                item.children = {}
+            }
+
+        })
+        return datamap
+    }
     return (
         <div>
             <CModal
-                show={modal}
+                show={isOpen}
                 // onClose={toggle}
                 size="lg"
                 closeOnBackdrop={false}
                 style={{ borderRadius: '25px' }}
             >
-                <CModalHeadertyled >{labelModal}</CModalHeadertyled>
+                <CModalHeadertyled >Nhóm quyền: {role_id.ten_nhom_quyen}</CModalHeadertyled>
                 {/* <form onSubmit={handleSubmit(handleSubmittest)} spellCheck="false"> */}
                 <CModalBodyStyled >
                     <TreeView
-                        
+
                         defaultCollapseIcon={<MdExpandMore />}
                         defaultExpandIcon={<MdChevronRight />}
                     >
-                        <TreeItem  nodeId="1" 
-                        // style={{padding: '0px'}}
-                        label={
-                            <FormControlLabel
-                                control={
-                                <Checkbox
-                                    color="primary" 
-                                    style={{height: '1em',}}
-                                />}
-                                label="Primary"
-                                style={{marginBottom: '0px'}}
-                                
-                            >
-                                
-                            </FormControlLabel>
-                        }>
-                            <TreeItem nodeId="2" label="Calendar" />
-                            <TreeItem nodeId="3" label="Chrome" />
-                            <TreeItem nodeId="4" label="Webstorm" />
-                        </TreeItem>
-                        <TreeItem nodeId="5" label="Documents">
-                            <TreeItem nodeId="10" label="OSS" />
-                            <TreeItem nodeId="6" label="Material-UI">
-                                <TreeItem nodeId="7" label="src">
-                                    <TreeItem nodeId="8" label="index.js" />
-                                    <TreeItem nodeId="9" label="tree-view.js" />
+                        {treeData && treeData.map((item,key) => {
+                            return (
+                                <TreeItem
+                                    key={key}
+                                    nodeId={item.ten_menu}
+                                    label={
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    color="primary"
+                                                    checked={item.checked? true: false}
+                                                    style={{ height: '1em', }} />
+                                            }
+                                            label={item.ten_menu}
+                                            style={{ marginBottom: '0px' }}
+                                        />}
+                                >
+                                    {
+                                        item.children && item.children.map((i,key) => {
+                                            return(
+                                                <TreeItem 
+                                                    nodeId={i.ten_menu} 
+                                                    label={i.ten_menu}
+                                                    key={key}
+                                                    label={
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox
+                                                                    color="primary"
+                                                                    style={{ height: '1em', }} 
+                                                                    checked={i.checked? true: false}
+                                                                />
+                                                            }
+                                                            label={i.ten_menu}
+                                                            style={{ marginBottom: '0px' }}
+                                                        />}
+                                                />
+                                            )
+                                        })
+                                    }
                                 </TreeItem>
-                            </TreeItem>
-                        </TreeItem>
+                            )
+                        })}
                     </TreeView>
                     {/* {summaryModal && summaryModal.map((item, key) => {
                             return (
